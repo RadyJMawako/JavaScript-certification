@@ -1,0 +1,23 @@
+// This project has been completed with the assistance of ChatGPT and my research  
+
+function convertToRoman(num) {
+  if (num <= 0 || num >= 4000) {
+    return "Invalid input";
+  }
+
+  const romanNumerals = [
+    ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"], // Ones
+    ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"], // Tens
+    ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"], // Hundreds
+    ["", "M", "MM", "MMM"] // Thousands
+  ];
+
+  const thousands = romanNumerals[3][Math.floor(num / 1000)];
+  const hundreds = romanNumerals[2][Math.floor((num % 1000) / 100)];
+  const tens = romanNumerals[1][Math.floor((num % 100) / 10)];
+  const ones = romanNumerals[0][num % 10];
+
+  return thousands + hundreds + tens + ones;
+}
+
+convertToRoman(36);
