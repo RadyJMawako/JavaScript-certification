@@ -1,0 +1,28 @@
+// The project was completed with combine research and ChatGTP assistance
+
+function rot13(encodedStr) {
+  let decodedStr = '';
+
+  for (let i = 0; i < encodedStr.length; i++) {
+    let char = encodedStr[i];
+
+    if (char >= 'A' && char <= 'Z') {
+      // Decode uppercase letters
+      let decodedChar = String.fromCharCode(((char.charCodeAt(0) - 'A'.charCodeAt(0) + 13) % 26) + 'A'.charCodeAt(0));
+      decodedStr += decodedChar;
+    } else if (char >= 'a' && char <= 'z') {
+      // Decode lowercase letters
+      let decodedChar = String.fromCharCode(((char.charCodeAt(0) - 'a'.charCodeAt(0) + 13) % 26) + 'a'.charCodeAt(0));
+      decodedStr += decodedChar;
+    } else {
+      // Non-alphabetic character, pass it as is
+      decodedStr += char;
+    }
+  }
+
+  return decodedStr;
+}
+
+// Test bellow 
+
+rot13("SERR PBQR PNZC");
