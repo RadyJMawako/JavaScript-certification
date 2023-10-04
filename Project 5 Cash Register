@@ -1,0 +1,58 @@
+// The project was completed thanks to combined research and the assistance of ChatGPT
+
+function checkCashRegister(price, cash, cid) {
+  const currencyUnit = {
+    "PENNY": 0.01,
+    "NICKEL": 0.05,
+    "DIME": 0.1,
+    "QUARTER": 0.25,
+    "ONE": 1,
+    "FIVE": 5,
+    "TEN": 10,
+    "TWENTY": 20,
+    "ONE HUNDRED": 100
+  };
+
+  let changeDue = cash - price;
+  let totalCid = 0;
+  for (let i = 0; i < cid.length; i++) {
+    totalCid += cid[i][1];
+  }
+  totalCid = Math.round(totalCid * 100) / 100;
+
+  if (totalCid < changeDue) {
+    return {status: "INSUFFICIENT_FUNDS", change: []};
+  }
+
+  if (totalCid === changeDue) {
+    return {status: "CLOSED", change: cid};
+  }
+
+  let changeArray = [];
+  cid = cid.reverse();
+  for (let i = 0; i < cid.length; i++) {
+    let unit = cid[i][0];
+    let unitValue = currencyUnit[unit];
+    let unitAmount = cid[i][1];
+    let unitInDrawer = unitAmount / unitValue;
+    let unitToGive = 0;
+
+    while (changeDue >= unitValue && unitInDrawer > 0) {
+      changeDue -= unitValue;
+      changeDue = Math.round(changeDue * 100) / 100;
+      unitAmount -= unitValue;
+      unitToGive += unitValue;
+      unitInDrawer--;
+    }
+
+    if (unitToGive > 0) {
+      changeArray.push([unit, unitToGive]);
+    }
+  }
+
+  if (changeDue > 0) {
+    return {status: "INSUFFICIENT_FUNDS", change: []};
+  }
+
+  return {status: "OPEN", change: changeArray};
+}
